@@ -9,15 +9,17 @@ class AuthController extends Controller
 {
     public function redirectToProvider()
     {
-        return Socialite::driver('keycloak')->redirect();
+        $url = Socialite::driver('keycloak')->redirect();
+        
+        return $url;
     }
 
     public function handleProviderCallback()
     {
         $user = Socialite::driver('keycloak')->user();
         
-        $existingUser = User::where('email', $user->email)->first();
+        session(['user' => $user]);
 
-        return redirect()->intended('/');
+        return redirect('/');
     }
 }
