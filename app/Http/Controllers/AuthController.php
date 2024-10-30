@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Laravel\Socialite\Facades\Socialite;
 
 class AuthController extends Controller
@@ -14,8 +15,9 @@ class AuthController extends Controller
     public function handleProviderCallback()
     {
         $user = Socialite::driver('keycloak')->user();
-        session(['user' => $user]);
+        
+        $existingUser = User::where('email', $user->email)->first();
 
-        return redirect('/');
+        return redirect()->intended('/');
     }
 }

@@ -8,7 +8,4 @@ Route::get('/', function () {
 });
 
 Route::get('/login', [AuthController::class, 'redirectToProvider']);
-Route::get('/callback', [AuthController::class, 'handleProviderCallback']);
-Route::get('/', function () {
-    return session('user') ? 'Logged In' : 'Not Logged In';
-});
+Route::get('/callback', [AuthController::class,'handleProviderCallback']);
